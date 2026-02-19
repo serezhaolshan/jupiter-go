@@ -7,9 +7,9 @@ import (
 type CreateOrderParams struct {
 	MakingAmount string `json:"makingAmount"`
 	TakingAmount string `json:"takingAmount"`
-	SlippageBps  *int   `json:"slippageBps,omitempty"`
+    SlippageBps  string `json:"slippageBps,omitempty"`
 	ExpiredAt    *int64 `json:"expiredAt,omitempty"`
-	FeeBps       *int   `json:"feeBps,omitempty"`
+    FeeBps       string `json:"feeBps,omitempty"`
 }
 
 type CreateOrderRequest struct {
