@@ -5,7 +5,13 @@ import (
 	"net/url"
 )
 
-type RoutersResponse []string
+type Router struct {
+	ID   string `json:"id"`
+	Name string `json:"name"`
+	Icon string `json:"icon,omitempty"`
+}
+
+type RoutersResponse []Router
 
 func (c *Client) GetRouters(ctx context.Context) (RoutersResponse, error) {
 	request := NewRequest(c.Url("/ultra/v1/order/routers"), url.Values{})

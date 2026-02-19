@@ -44,14 +44,15 @@ type GetTokensParams struct {
 func (c *Client) GetTokens(ctx context.Context, params GetTokensParams) ([]TokenV2, error) {
 	queryParams := url.Values{}
 
-	if params.Interval != "" {
-		queryParams.Set("interval", params.Interval)
-	}
 	if params.Limit > 0 {
 		queryParams.Set("limit", fmt.Sprintf("%d", params.Limit))
 	}
 
+	// Interval is part of the path: /tokens/v2/{sortBy}/{interval}
 	endpoint := fmt.Sprintf("/tokens/v2/%s", params.SortBy)
+	if params.Interval != "" {
+		endpoint = fmt.Sprintf("/tokens/v2/%s/%s", params.SortBy, params.Interval)
+	}
 	request := NewRequest(c.Url(endpoint), queryParams)
 	var response []TokenV2
 	_, err := c.doCall(ctx, request, &response)
