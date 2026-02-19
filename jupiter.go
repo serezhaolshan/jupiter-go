@@ -69,12 +69,12 @@ func (c *Client) doCall(ctx context.Context, req *Request, response any) (*http.
 	defer httpResponse.Body.Close()
 
 	if httpResponse.StatusCode >= http.StatusBadRequest {
-		return nil, fmt.Errorf(
-			"call %v() on %v status code: %v.raw body %v",
-			req.Method,
-			httpRequest.URL.String(),
-			httpResponse.StatusCode,
-			string(bodyBytes))
+		return nil, &APIError{
+			StatusCode: httpResponse.StatusCode,
+			RawBody:    bodyBytes,
+			Method:     req.Method,
+			URL:        httpRequest.URL.String(),
+		}
 	}
 
 	err = json.Unmarshal(bodyBytes, response)

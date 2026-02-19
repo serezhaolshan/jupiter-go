@@ -72,9 +72,6 @@ func TestCreateOrder(t *testing.T) {
 }
 
 func TestCreateOrder_WithOptionalParams(t *testing.T) {
-	slippage := 50
-	feeBps := 10
-	expiredAt := int64(1700000000)
 	wrapSol := true
 
 	server := newTestServer(t, func(w http.ResponseWriter, r *http.Request) {
@@ -82,13 +79,13 @@ func TestCreateOrder_WithOptionalParams(t *testing.T) {
 		var req CreateOrderRequest
 		json.Unmarshal(body, &req)
 
-		if req.Params.SlippageBps == nil || *req.Params.SlippageBps != 50 {
+		if req.Params.SlippageBps != "50" {
 			t.Errorf("expected SlippageBps 50, got %v", req.Params.SlippageBps)
 		}
-		if req.Params.FeeBps == nil || *req.Params.FeeBps != 10 {
+		if req.Params.FeeBps != "10" {
 			t.Errorf("expected FeeBps 10, got %v", req.Params.FeeBps)
 		}
-		if req.Params.ExpiredAt == nil || *req.Params.ExpiredAt != 1700000000 {
+		if req.Params.ExpiredAt != "1700000000" {
 			t.Errorf("expected ExpiredAt 1700000000, got %v", req.Params.ExpiredAt)
 		}
 		if req.WrapAndUnwrapSol == nil || !*req.WrapAndUnwrapSol {
@@ -111,9 +108,9 @@ func TestCreateOrder_WithOptionalParams(t *testing.T) {
 		Params: CreateOrderParams{
 			MakingAmount: "1000000",
 			TakingAmount: "150000",
-			SlippageBps:  &slippage,
-			FeeBps:       &feeBps,
-			ExpiredAt:    &expiredAt,
+			SlippageBps:  "50",
+			FeeBps:       "10",
+			ExpiredAt:    "1700000000",
 		},
 		ComputeUnitPrice: "1000",
 		FeeAccount:       "feeAcct",

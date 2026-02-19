@@ -8,7 +8,7 @@ type CreateOrderParams struct {
 	MakingAmount string `json:"makingAmount"`
 	TakingAmount string `json:"takingAmount"`
     SlippageBps  string `json:"slippageBps,omitempty"`
-	ExpiredAt    *int64 `json:"expiredAt,omitempty"`
+	ExpiredAt    string `json:"expiredAt,omitempty"`
     FeeBps       string `json:"feeBps,omitempty"`
 }
 
