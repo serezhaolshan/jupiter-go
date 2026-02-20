@@ -15,16 +15,34 @@ type GetTriggerOrdersParams struct {
 }
 
 type TriggerOrder struct {
-	ID         string `json:"id"`
-	User       string `json:"user"`
-	InputMint  string `json:"inputMint"`
-	OutputMint string `json:"outputMint"`
-	Status     string `json:"status"`
+	UserPubkey              string   `json:"userPubkey"`
+	OrderKey                string   `json:"orderKey"`
+	InputMint               string   `json:"inputMint"`
+	OutputMint              string   `json:"outputMint"`
+	MakingAmount            string   `json:"makingAmount"`
+	TakingAmount            string   `json:"takingAmount"`
+	RemainingMakingAmount   string   `json:"remainingMakingAmount"`
+	RemainingTakingAmount   string   `json:"remainingTakingAmount"`
+	RawMakingAmount         string   `json:"rawMakingAmount"`
+	RawTakingAmount         string   `json:"rawTakingAmount"`
+	RawRemainingMakingAmount string  `json:"rawRemainingMakingAmount"`
+	RawRemainingTakingAmount string  `json:"rawRemainingTakingAmount"`
+	SlippageBps             string   `json:"slippageBps"`
+	ExpiredAt               *string  `json:"expiredAt"`
+	CreatedAt               string   `json:"createdAt"`
+	UpdatedAt               string   `json:"updatedAt"`
+	Status                  string   `json:"status"`
+	OpenTx                  string   `json:"openTx"`
+	CloseTx                 *string  `json:"closeTx"`
+	ProgramVersion          string   `json:"programVersion"`
+	Trades                  []any    `json:"trades"`
 }
 
 type GetTriggerOrdersResponse struct {
+	User        string         `json:"user"`
+	OrderStatus string         `json:"orderStatus"`
 	Orders      []TriggerOrder `json:"orders"`
-	HasMoreData bool           `json:"hasMoreData"`
+	TotalPages  int            `json:"totalPages"`
 	Page        int            `json:"page"`
 }
 

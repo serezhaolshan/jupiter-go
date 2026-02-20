@@ -9,12 +9,14 @@ import (
 
 func TestGetTriggerOrders(t *testing.T) {
 	resp := GetTriggerOrdersResponse{
+		User:        "user1",
+		OrderStatus: "open",
 		Orders: []TriggerOrder{
-			{ID: "order1", User: "user1", InputMint: "SOL", OutputMint: "USDC", Status: "open"},
-			{ID: "order2", User: "user1", InputMint: "SOL", OutputMint: "USDC", Status: "filled"},
+			{UserPubkey: "user1", OrderKey: "order1", InputMint: "SOL", OutputMint: "USDC", MakingAmount: "1.0", TakingAmount: "200.0", Status: "Open"},
+			{UserPubkey: "user1", OrderKey: "order2", InputMint: "SOL", OutputMint: "USDC", MakingAmount: "2.0", TakingAmount: "400.0", Status: "Filled"},
 		},
-		HasMoreData: true,
-		Page:        1,
+		TotalPages: 2,
+		Page:       1,
 	}
 
 	server := newTestServer(t, func(w http.ResponseWriter, r *http.Request) {
@@ -46,8 +48,8 @@ func TestGetTriggerOrders(t *testing.T) {
 	if len(result.Orders) != 2 {
 		t.Fatalf("expected 2 orders, got %d", len(result.Orders))
 	}
-	if !result.HasMoreData {
-		t.Error("expected HasMoreData to be true")
+	if result.TotalPages != 2 {
+		t.Errorf("expected totalPages 2, got %d", result.TotalPages)
 	}
 	if result.Page != 1 {
 		t.Errorf("expected page 1, got %d", result.Page)
